@@ -1,1 +1,1 @@
-# cx-images
+# CX Images
