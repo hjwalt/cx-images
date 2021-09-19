@@ -59,7 +59,8 @@ jobs:
     strategy:
       matrix:
         image-builds: 
-          - cx-go-docker
+          - cx-docker-go
+          - cx-docker-jdk-11
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

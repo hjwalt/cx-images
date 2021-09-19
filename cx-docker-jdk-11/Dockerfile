@@ -9,8 +9,8 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /
     
 RUN curl -sL https://github.com/kubernetes-sigs/kubebuilder/releases/download/v2.3.2/kubebuilder_2.3.2_linux_amd64.tar.gz | tar -xz -C /usr/local/ \
     && mv /usr/local/kubebuilder_2.3.2_linux_amd64 /usr/local/kubebuilder 
-ENV PATH="${PATH}:/usr/local/go/bin"
-
-RUN rm -rf /usr/local/go \
-    && curl -sL https://golang.org/dl/go1.17.1.linux-amd64.tar.gz | tar -xz -C /usr/local/ 
 ENV PATH="${PATH}:/usr/local/kubebuilder/bin"
+
+RUN curl -sL https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz | tar -xz -C /usr/local \
+    && mv /usr/local/jdk-11 /usr/local/jdk 
+ENV PATH="${PATH}:/usr/local/jdk/bin"
