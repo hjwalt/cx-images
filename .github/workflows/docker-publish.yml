@@ -37,7 +37,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.source=github.com/${{ GITHUB_REPOSITORY }}
+            org.opencontainers.image.source=github.com/${{ env.GITHUB_REPOSITORY }}
 
       - name: Log into Docker Hub
         if: github.event_name != 'pull_request'
