@@ -38,8 +38,8 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.source=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-            org.opencontainers.image.documentation=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
+            org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
+            org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
       - name: Log into Docker Hub
         if: github.event_name != 'pull_request'
@@ -79,8 +79,8 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.source=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-            org.opencontainers.image.documentation=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
+            org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
+            org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
       - name: Log into Docker Hub
         if: github.event_name != 'pull_request'
