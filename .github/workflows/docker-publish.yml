@@ -30,13 +30,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ github.job }}
-          flavor: |
-            latest=auto
+          images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/cx-base
           tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest
           labels: |
             org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
             org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
@@ -52,12 +48,13 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./${{ github.job }}
+          context: ./cx-base
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           
-  cx-go-k8s:
+  cx-instances:
+    needs: cx-base
     runs-on: ubuntu-latest
     strategy:
       matrix:
