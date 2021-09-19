@@ -11,17 +11,18 @@ on:
     branches: [ main ]
 
 env:
+  GITHUB_URL: github.com
   REGISTRY: docker.io
-
-
+  DOCKERHUB_ACCOUNT: hjwalt
+  
 jobs:
-  go-k8s:
+  cx-base: &job
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     env:
-      IMAGE_NAME: hjwalt/go-k8s
+      IMAGE_NAME: ${{ env.DOCKERHUB_ACCOUNT }}/cx-base
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -30,7 +31,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ github.job }}
           flavor: |
             latest=auto
           tags: |
@@ -38,7 +39,8 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
-            org.opencontainers.image.source=github.com/${{ env.GITHUB_REPOSITORY }}
+            org.opencontainers.image.source=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
+            org.opencontainers.image.documentation=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
       - name: Log into Docker Hub
         if: github.event_name != 'pull_request'
@@ -51,7 +53,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./go-k8s
+          context: ./${{ github.job }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+  cx-go-k8s: *job
