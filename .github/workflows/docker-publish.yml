@@ -19,11 +19,6 @@ permissions:
   contents: read
   packages: write
 
-defaults:
-  labels: |
-    org.opencontainers.image.source=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-    org.opencontainers.image.documentation=${{ GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
-
 jobs:
   cx-base:
     runs-on: ubuntu-latest
@@ -64,6 +59,10 @@ jobs:
           
   cx-go-k8s:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image-builds: 
+          - cx-go-k8s
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -72,7 +71,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ github.job }}
+          images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ matrix.image-builds }}
           flavor: |
             latest=auto
           tags: |
@@ -94,7 +93,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./${{ github.job }}
+          context: ./${{ matrix.image-builds }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
