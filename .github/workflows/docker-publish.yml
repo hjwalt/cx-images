@@ -1,11 +1,8 @@
 name: Docker
 
 on:
-#   schedule:
-#     - cron: '31 15 * * *'
   push:
     branches: [ main ]
-    # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
@@ -34,12 +31,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.DOCKERHUB_ACCOUNT }}/cx-base
           tags: |
             type=raw,value=latest
-          # labels: |
-          #   org.label-schema.name=cx-base
-          #   org.label-schema.url=${{ env.DOCKERHUB_URL }}/${{ env.DOCKERHUB_ACCOUNT }}/cx-base
-          #   org.label-schema.vcs-url=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-          #   org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-          #   org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -62,6 +53,13 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          repository: ${{ env.DOCKERHUB_ACCOUNT }}/cx-base
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           
   cx-instances:
     needs: cx-base
@@ -86,12 +84,6 @@ jobs:
             type=ref,event=branch
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-          # labels: |
-          #   org.label-schema.name=${{ matrix.image-builds }}
-          #   org.label-schema.url=${{ env.DOCKERHUB_URL }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ matrix.image-builds }}
-          #   org.label-schema.vcs-url=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-          #   org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
-          #   org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -111,6 +103,15 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./${{ matrix.image-builds }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          repository: ${{ env.DOCKERHUB_ACCOUNT }}/${{ matrix.image-builds }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
