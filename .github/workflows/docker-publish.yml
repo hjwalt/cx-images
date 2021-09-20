@@ -50,6 +50,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./cx-base
+          cache-to: type=gha,mode=min
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -97,7 +98,6 @@ jobs:
         with:
           context: ./${{ matrix.image-builds }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
