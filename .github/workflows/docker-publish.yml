@@ -13,6 +13,7 @@ on:
 env:
   GITHUB_URL: github.com
   REGISTRY: docker.io
+  DOCKERHUB_URL: https://hub.docker.com/r
   DOCKERHUB_ACCOUNT: hjwalt
   
 permissions:
@@ -34,6 +35,9 @@ jobs:
           tags: |
             type=raw,value=latest
           labels: |
+            org.label-schema.name=cx-base
+            org.label-schema.url=${{ env.DOCKERHUB_URL }}/${{ env.DOCKERHUB_ACCOUNT }}/cx-base
+            org.label-schema.vcs-url=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
             org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
             org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
@@ -77,6 +81,9 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           labels: |
+            org.label-schema.name=${{ matrix.image-builds }}
+            org.label-schema.url=${{ env.DOCKERHUB_URL }}/${{ env.DOCKERHUB_ACCOUNT }}/${{ matrix.image-builds }}
+            org.label-schema.vcs-url=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
             org.opencontainers.image.source=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}
             org.opencontainers.image.documentation=${{ env.GITHUB_URL }}/${{ env.GITHUB_REPOSITORY }}/blob/${{ env.GITHUB_REF }}/README.md
 
