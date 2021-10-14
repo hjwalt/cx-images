@@ -3,7 +3,7 @@ FROM debian:buster
 LABEL maintainer="hjwalt"
 
 RUN apt-get update -y \
-    && apt-get install -y apt-transport-https build-essential ca-certificates curl git gnupg jq lsb-release make \
+    && apt-get install -y apt-transport-https build-essential ca-certificates curl git gnupg jq lsb-release make wget \
     && apt-get autoremove \
     && apt-get clean \
     && curl -sL https://storage.googleapis.com/kubernetes-release/release/v1.21.2/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
