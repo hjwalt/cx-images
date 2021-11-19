@@ -9,7 +9,8 @@ RUN source /root/.bashrc \
 
 RUN curl https://archive.apache.org/dist/kafka/2.8.1/kafka_2.13-2.8.1.tgz --output kafka.tgz
 RUN tar -zxvf kafka.tgz \
-  && mv kafka_2.13-2.8.1 kafka \
+  && mv kafka_2.13-2.8.1 /root/kafka \
+  && rm kafka.tgz \
   && chmod g+rwx /root \
   && mkdir /config \
   && chmod g+rwx /config 
