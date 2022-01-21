@@ -65,6 +65,7 @@ jobs:
           - cx-docker-go
           - cx-docker-jdk-11
           - cx-jdk-11
+          - cx-python-3-9
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
