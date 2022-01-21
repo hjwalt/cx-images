@@ -27,6 +27,10 @@ WORKDIR /root/.pyenv
 
 RUN src/configure \
     && make -C src \
+    && echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc \
+    && echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc \
+    && echo 'eval "$(pyenv init --path)"' >> /root/.bashrc \
+    && echo 'eval "$(pyenv init -)"' >> /root/.bashrc \
     && echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.profile \
     && echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.profile \
     && echo 'eval "$(pyenv init --path)"' >> /root/.profile \
@@ -35,3 +39,5 @@ RUN src/configure \
 WORKDIR /root
 
 CMD bash
+
+ENV BASH_ENV "/etc/profile" 
