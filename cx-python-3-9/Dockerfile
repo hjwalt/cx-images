@@ -4,7 +4,7 @@ LABEL maintainer="hjwalt"
 
 SHELL ["/bin/bash", "-c"]
 
-RUN source /root/.bashrc \
+RUN source /root/.profile \
     && pyenv install 3.9.9 \
     && pyenv local 3.9.9
 
