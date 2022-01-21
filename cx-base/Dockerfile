@@ -39,5 +39,3 @@ RUN src/configure \
 WORKDIR /root
 
 CMD bash
-
-ENV BASH_ENV "/etc/profile" 
