@@ -61,6 +61,7 @@ jobs:
     strategy:
       matrix:
         image-builds: 
+          - kaniko
           - tools
           - cx-docker-go
           - cx-docker-jdk-11
