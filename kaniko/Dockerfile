@@ -3,7 +3,7 @@ FROM alpine:3
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache bash curl
+    apk add --no-cache bash curl gettext
 
 COPY --from=kaniko /kaniko /kaniko
 
