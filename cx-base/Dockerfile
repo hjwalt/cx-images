@@ -39,4 +39,4 @@ WORKDIR /root
 
 # CMD ["/bin/bash", "-c"]
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]
