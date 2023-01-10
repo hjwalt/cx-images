@@ -1,4 +1,4 @@
-FROM hjwalt/cx-base-test-2:latest
+FROM hjwalt/cx-base:latest
 
 LABEL maintainer="hjwalt"
 
