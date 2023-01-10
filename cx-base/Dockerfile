@@ -17,7 +17,7 @@ RUN apt-get update -y && \
 SHELL ["/bin/bash", "-lc"]
 
 ENV SDKMAN_DIR /root/.sdkman
-ENV BASH_ENV /etc/bash.bashrc
+ENV BASH_ENV /etc/.profile
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config && \
@@ -27,7 +27,6 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 RUN cd /root/.pyenv && \
     src/configure && \
     make -C src && \
-    echo '. /root/.profile' >> /etc/bash.bashrc && \
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \

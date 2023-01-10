@@ -4,7 +4,7 @@ LABEL maintainer="hjwalt"
 
 SHELL ["/bin/bash", "-lc"]
 
-ENV BASH_ENV /etc/bash.bashrc
+ENV BASH_ENV /etc/.profile
 
 RUN pyenv install 3.11.1 && \
     pyenv local 3.11.1 && \

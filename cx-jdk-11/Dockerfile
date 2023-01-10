@@ -4,7 +4,7 @@ LABEL maintainer="hjwalt"
 
 SHELL ["/bin/bash", "-lc"]
 
-ENV BASH_ENV /etc/bash.bashrc
+ENV BASH_ENV /etc/.profile
 
 RUN source /root/.bashrc \
     && source "/root/.sdkman/bin/sdkman-init.sh" \
