@@ -30,6 +30,10 @@ RUN cd /root/.pyenv && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init -)"' >> /root/.bashrc && \
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bash_profile && \
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bash_profile && \
+    echo 'eval "$(pyenv init --path)"' >> /root/.bash_profile && \
+    echo 'eval "$(pyenv init -)"' >> /root/.bash_profile && \
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.profile && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.profile && \
     echo 'eval "$(pyenv init --path)"' >> /root/.profile && \
