@@ -17,6 +17,7 @@ RUN apt-get update -y && \
 SHELL ["/bin/bash", "-lc"]
 
 ENV SDKMAN_DIR /root/.sdkman
+ENV BASH_ENV "/etc/profile"
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config && \
