@@ -37,6 +37,6 @@ RUN cd /root/.pyenv && \
 
 WORKDIR /root
 
-CMD ["/bin/bash", "-c"]
+# CMD ["/bin/bash", "-c"]
 
 ENTRYPOINT ["/bin/bash"]
