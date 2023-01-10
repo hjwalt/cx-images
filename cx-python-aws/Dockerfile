@@ -1,10 +1,8 @@
-FROM hjwalt/cx-base:latest
+FROM hjwalt/cx-base-test-2:latest
 
 LABEL maintainer="hjwalt"
 
 SHELL ["/bin/bash", "-lc"]
-
-ENV BASH_ENV /etc/.profile
 
 RUN pyenv install 3.11.1 && \
     pyenv local 3.11.1 && \

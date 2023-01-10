@@ -1,6 +1,8 @@
-FROM debian:bullseye
+FROM ubuntu:latest
 
 LABEL maintainer="hjwalt"
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y && \
     apt-get install -y apt-transport-https build-essential ca-certificates curl dnsutils gettext-base git gnupg jq lsb-release make wget zip && \
@@ -14,10 +16,10 @@ RUN apt-get update -y && \
     helm repo add "stable" "https://charts.helm.sh/stable" --force-update && \
     git clone https://github.com/pyenv/pyenv.git /root/.pyenv
 
-SHELL ["/bin/bash", "-lc"]
+# SHELL ["/bin/bash", "-lc"]
 
 ENV SDKMAN_DIR /root/.sdkman
-ENV BASH_ENV /etc/.profile
+# ENV BASH_ENV /etc/.profile
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config && \
@@ -27,11 +29,11 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 RUN cd /root/.pyenv && \
     src/configure && \
     make -C src && \
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc && \
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init -)"' >> /root/.bashrc
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.profile && \
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.profile && \
+    echo 'eval "$(pyenv init --path)"' >> /root/.profile && \
+    echo 'eval "$(pyenv init -)"' >> /root/.profile
 
 WORKDIR /root
 
-CMD ["/bin/bash", "-lc"]
+# CMD ["/bin/bash", "-lc"]
