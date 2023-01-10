@@ -36,7 +36,3 @@ RUN cd /root/.pyenv && \
     echo 'eval "$(pyenv init -)"' >> /root/.profile
 
 WORKDIR /root
-
-# CMD ["/bin/bash", "-c"]
-
-ENTRYPOINT ["/bin/bash", "-lc"]
