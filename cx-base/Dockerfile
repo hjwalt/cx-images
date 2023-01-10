@@ -14,7 +14,7 @@ RUN apt-get update -y && \
     helm repo add "stable" "https://charts.helm.sh/stable" --force-update && \
     git clone https://github.com/pyenv/pyenv.git /root/.pyenv
 
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-lc"]
 
 ENV SDKMAN_DIR /root/.sdkman
 
