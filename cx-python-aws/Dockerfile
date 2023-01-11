@@ -1,12 +1,10 @@
-FROM hjwalt/cx-base:latest
+FROM python:3.11.1-bullseye
 
 LABEL maintainer="hjwalt"
 
-SHELL ["/bin/bash", "-lc"]
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN pyenv install 3.11.1 && \
-    pyenv local 3.11.1 && \
-    pip install pipenv && \
+RUN pip3 install pipenv && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install 
